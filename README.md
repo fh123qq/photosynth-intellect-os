@@ -1,2 +1,1 @@
-# photosynth-intellect-os
-A blueprint for the P hotosynthintellect EDUcational Meta-operating system
+这是一个旨在超越传统教育范式，以“滋养完整生命”为目标的教育元操作系统开源蓝图。它包含五维模型，贡献值贡献信用，资源智能调度等核心协议，旨在回应“钱学森之问”与ＡＩ时代的教育危机。
