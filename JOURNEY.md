@@ -52,3 +52,7 @@ function drawHandDrawnPolygon(ctx, points) {
   ];
   drawHandDrawnPolygon(ctx, points);
 </script>
+- [x] 2026-05-12: 手绘五维健康度图谱技术原型 v0.1.0 发布。
+  - 提交哈希：
+  - 在线体验：[prototypes/five-dimensions-self-assessment-v0.1.0/]
+  - 状态：**诺言达成，原型就绪，等待回声。**
