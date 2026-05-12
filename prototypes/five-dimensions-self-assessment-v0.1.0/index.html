@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光合融慧 | 五维健康度自评工具 v0.1.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f2f6;
+        }
+
+        .dimension-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .dimension-slider {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .dimension-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .dimension-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .dimension-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #3498db;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .dimension-slider.魂 { border-left-color: #e74c3c; }
+        .dimension-slider.慧 { border-left-color: #3498db; }
+        .dimension-slider.心 { border-left-color: #9b59b6; }
+        .dimension-slider.身 { border-left-color: #2ecc71; }
+        .dimension-slider.形 { border-left-color: #f39c12; }
+
+        .dimension-name.魂 { color: #e74c3c; }
+        .dimension-name.慧 { color: #3498db; }
+        .dimension-name.心 { color: #9b59b6; }
+        .dimension-name.身 { color: #2ecc71; }
+        .dimension-name.形 { color: #f39c12; }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #dfe6e9;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-魂::-webkit-slider-thumb { border-color: #e74c3c; }
+        .slider-慧::-webkit-slider-thumb { border-color: #3498db; }
+        .slider-心::-webkit-slider-thumb { border-color: #9b59b6; }
+        .slider-身::-webkit-slider-thumb { border-color: #2ecc71; }
+        .slider-形::-webkit-slider-thumb { border-color: #f39c12; }
+
+        .dimension-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .canvas-container {
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2980b9, #2573a6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #2c3e50;
+            border: 2px solid #dfe6e9;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            border-color: #bdc3c7;
+        }
+
+        .info-panel {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+        }
+
+        .dimension-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .info-item.魂 { border-left-color: #e74c3c; }
+        .info-item.慧 { border-left-color: #3498db; }
+        .info-item.心 { border-left-color: #9b59b6; }
+        .info-item.身 { border-left-color: #2ecc71; }
+        .info-item.形 { border-left-color: #f39c12; }
+
+        .info-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .info-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .version {
+            display: inline-block;
+            background: #f1f2f6;
+            padding: 2px
